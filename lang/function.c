@@ -21,8 +21,13 @@ int param(int a, int b) // 形参 a 和 b
     return a + b;
 }
 
-int main() // 主函数，c 程序必须从 main 函数开始执行
+int main(int argc, char *argv[]) // 主函数，c 程序必须从 main 函数开始执行
 {
+    for (int i = 0; i < argc; i++)
+    {
+        printf("命令行参数 %02d：%s\n", i + 1, argv[i]);
+    }
+
     void inner(); // 可以在函数内部声明函数
 
     // 调用函数

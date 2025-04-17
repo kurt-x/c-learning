@@ -101,8 +101,11 @@ char name[40] = "abc";
 int months[12] = { 31, 28 }; // 声明一个整型数组，包含 12 个元素，初始化前两个元素
 const int arr[3] = { 1, 2, 3 }; // 常量数组，不能修改，内部元素值也不能修改
 int arr2[3] = { [2] = 3 }; // 初始化指定元素，其他元素初始化为 0
+int *arr3 = (int[]){ 1, 2, 3 }; // 复合字面量，创建一个匿名数组
 
 #include <stdio.h>
+
+void fun(int ar[]) { printf("传参的数组尺寸：%zd，地址：%p\n", sizeof ar, ar); }
 
 int main()
 {
@@ -141,6 +144,22 @@ int main()
     printf("打印指针指向的值：%d\n", *pointer); // * 也可用作取值
     *pointer = 20; // 修改指针指向的值
     printf("打印指针指向的值：%d\n", *pointer);
+
+    // 数组就是第一个元素的地址
+    printf("数组：\t\t\t%p\n", arr);
+    printf("数组第一个元素地址：\t%p\n", &arr[0]);
+    printf("数组第一个元素的值：\t%d\n", *arr);
+    printf("数组第二个元素地址：\t%p\n", arr + 1);
+    printf("数组第二个元素的值：\t%d\n", *(arr + 1));
+    printf("数组第三个元素地址：\t%p\n", arr + 2);
+    printf("数组第三个元素的值：\t%d\n", *(arr + 2));
+    // 指针的加减法会将加减数乘以指向的元素的大小再进行计算
+    printf("指针：\t\t%p\n", pointer);
+    printf("指针 + 1：\t%p\n", pointer + 1);
+    printf("&指针[1]：\t%p\n", &pointer[1]);
+
+    printf("数组尺寸：%zd，地址：%p\n", sizeof arr, arr);
+    fun(arr); // 数组传参传的是指针
 
     return 0;
 }
