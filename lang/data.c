@@ -1,14 +1,28 @@
 // 数据
+#include <stdlib.h>
 
 int var; // 声明变量，变量名为 var，类型为 int
 // var = 10; // 赋值，将 10 赋值给 var，这个步骤必须在方法或块内部，不能在全局作用域内
+
+static int static_var; // 静态变量，函数调用后不会销毁
+// 静态变量只能在当前文件访问
+
+_Thread_local int thread_local_var; // 线程存储期变量，每个线程都会有一个独立的副本
 
 // 变量名可以由字母、数字、下划线组成，不能以数字开头，区分大小写
 // 变量名不能是关键字，关键字是编程语言保留的，有特殊含义的单词，例如 int、char、if、else 等
 // c99 和 c11 根据 UCN（Universal Character Names）规范支持中文变量名
 int 整数 = 10;
 
-const int con = 10; // 不能被修改的变量称为常量，const 修饰的变量不能被修改
+const int con = 10; // 不能被修改的变量称为常量，const 修饰的变量初始化后不能被修改
+const int * const const_ptr = &con; // 第一个 const 表示指向的值不能修改，第二个 cosnt
+
+volatile int * const volatile_ptr = &con; // volatile 表示指向的值可能会被其他线程或硬件修改，volatile 修饰的变量不会被优化
+
+int * restrict restrict_ptr = &con; // restrict 表示该指针是访问某个内存区域的唯一方式，编译器可以对该指针进行优化
+// restrict 只能用于指针
+
+_Atomic int atomic_var = 10; // 原子变量，保证线程安全
 
 // 字面量
 // 字面量是指程序中直接使用的数据，例如 10、3.14、'a'、"hello" 等
@@ -77,8 +91,8 @@ float f2 = 3.14E-2; // 3.14 * 10^-2
 double d2 = 3.14E2; // 3.14 * 10^2
 
 // 布尔值
-// C 语言没有内置的布尔类型，使用 1 和 0 代替，stdbool.h 头文件中定义了 bool、true、false
-#include <stdbool.h>
+#define true 1
+#define false 0
 bool b1 = true;
 bool b2 = false;
 
@@ -160,6 +174,23 @@ int main()
 
     printf("数组尺寸：%zd，地址：%p\n", sizeof arr, arr);
     fun(arr); // 数组传参传的是指针
+
+    // 动态内存分配
+    int size = 10;
+    int *mp = (int *)malloc(size * sizeof(int));
+    free(mp); // 释放内存
+    mp = NULL; // 释放后将指针置为 NULL，防止野指针
+
+    int *cp = (int *)calloc(size, sizeof(int)); // 第一个参数是元素个数，第二个参数是元素大小
+
+    // malloc 不会初始化内存
+    // calloc 会将分配的内存都初始化为 0
+
+    // realloc 重新分配内存
+    realloc(mp, size * sizeof(int)); // 重新分配内存，原来的内存会被释放
+
+    register int reg_var; // 使用 register 请求将变量存储在寄存器中
+    // register 变量不能取地址，不能使用 & 运算符
 
     return 0;
 }
