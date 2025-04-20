@@ -21,6 +21,14 @@ int param(int a, int b) // 形参 a 和 b
     return a + b;
 }
 
+// 函数指针
+// fp 表示一个函数指针，指向一个参数为 char *，返回值为 void 的函数
+void fun_param(void (*fp)(char *)) { fp("hello function pointer"); }
+
+void fun_pointer(char *str) { printf("%s\n", str); }
+
+inline void inline_fun() { puts("内联函数"); }
+
 int main(int argc, char *argv[]) // 主函数，c 程序必须从 main 函数开始执行
 {
     for (int i = 0; i < argc; i++)
@@ -47,6 +55,11 @@ int main(int argc, char *argv[]) // 主函数，c 程序必须从 main 函数开
 
     inner();
     fun3();
+
+    void (*fp)(char *); // 声明一个函数指针
+    fp = fun_pointer;
+    fun_param(fp);
+
     return 0;
 }
 
