@@ -49,6 +49,16 @@ typedef struct
 
 typedef char * string; // 定义字符串引用类型别名 string
 
+// 位字段
+// 位字段是在一个 int 结构中拆分的
+// 不管在一个结构中定义多少位字段，总大小都至少是 n * sizeof(int) 位，例如 32 位、64 位、96 位等
+struct
+{
+    unsigned int a : 1; // 1 位
+    unsigned int b : 2; // 2 位
+    unsigned int c : 3; // 3 位
+} bit_field;
+
 int main()
 {
     // 指定初始化器
