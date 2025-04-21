@@ -1,6 +1,8 @@
 // 函数
 
 #include <stdio.h>
+#include <stdlib.h>
+
 int fun(int a); // 声明函数原型，参数名称声明可选
 
 int /* 函数返回值类型 */ fun /* 函数名称/函数签名 */ (int a /* 参数 */)
@@ -29,8 +31,12 @@ void fun_pointer(char *str) { printf("%s\n", str); }
 
 inline void inline_fun() { puts("内联函数"); }
 
+void closed_fun() { puts("程序关闭！"); }
+
 int main(int argc, char *argv[]) // 主函数，c 程序必须从 main 函数开始执行
 {
+    atexit(closed_fun); // 注册关闭函数
+    
     for (int i = 0; i < argc; i++)
     {
         printf("命令行参数 %02d：%s\n", i + 1, argv[i]);
